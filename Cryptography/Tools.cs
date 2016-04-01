@@ -16,8 +16,9 @@ namespace Cryptography
         public static bool[] ArrayXor(bool[] left, bool[] right)
         {
             var results = new bool[left.Length];
-            for (int i = 0; i < left.Length; i++)
+            System.Threading.Tasks.Parallel.For(0, left.Length, i => {
                 results[i] = left[i] ^ right[i];
+            });
             return results;
         }
 

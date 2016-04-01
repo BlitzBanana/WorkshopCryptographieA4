@@ -56,7 +56,7 @@ namespace Cryptography
             var k2 = keys[1];
             var ip = SDes.Permutations.Ip(bits);
             var fk = this.Fk(ip, k1);
-            fk = this.Sw(fk);
+            fk = this.Swap(fk);
             fk = this.Fk(fk, k2);
             var result = SDes.Permutations.Rip(fk);
             return Tools.BoolArrayToChar(result);
@@ -69,7 +69,7 @@ namespace Cryptography
             var k2 = keys[1];
             var ip = SDes.Permutations.Ip(Tools.CharToBoolArray(character));
             var fk = this.Fk(ip, k2);
-            fk = this.Sw(fk);
+            fk = this.Swap(fk);
             fk = this.Fk(fk, k1);
             var result = SDes.Permutations.Rip(fk);
             return Tools.BoolArrayToChar(result);
@@ -113,7 +113,7 @@ namespace Cryptography
             return Tools.MergeArrays<bool>(result, right);
         }
 
-        private bool[] Sw(bool[] input)
+        private bool[] Swap(bool[] input)
         {
             var left = input.Take(input.Length / 2).ToArray();
             var right = input.Skip(input.Length / 2).ToArray();
@@ -136,100 +136,62 @@ namespace Cryptography
                 return this._matrix[x, y];
             }
 
-            private int CoupleToInt(bool[] bools)
+            private int CoupleToInt(bool[] booleans)
             {
-                var one = bools[0];
-                var two = bools[1];
-                if (one == false && two == false) return 0;
-                if (one == false && two == true) return 1;
-                if (one == true && two == false) return 2;
-                if (one == true && two == true) return 3;
+                var left = booleans[0];
+                var right = booleans[1];
+                if (left == false && right == false) return 0;
+                if (left == false && right == true) return 1;
+                if (left == true && right == false) return 2;
+                if (left == true && right == true) return 3;
                 return -1;
             }
         }
 
         class Permutations
         {
+            private static bool[] Permute(bool[] toPermute, int[] permutation)
+            {
+                var permuted = new bool[permutation.Length];
+                for (int i = 0; i < permutation.Length; i++)
+                    permuted[i] = toPermute[permutation[i] - 1];
+                return permuted;
+            }
+
             internal static bool[] P10(bool[] toPermute)
             {
-                var permuted = new bool[10];
-                permuted[0] = toPermute[2];
-                permuted[1] = toPermute[4];
-                permuted[2] = toPermute[1];
-                permuted[3] = toPermute[6];
-                permuted[4] = toPermute[3];
-                permuted[5] = toPermute[9];
-                permuted[6] = toPermute[0];
-                permuted[7] = toPermute[8];
-                permuted[8] = toPermute[7];
-                permuted[9] = toPermute[5];
-                return permuted;
+                var permutation = new int[] { 3, 5, 2, 7, 4, 10, 1, 9, 8, 6 };
+                return Permute(toPermute, permutation);
             }
 
             internal static bool[] P8(bool[] toPermute)
             {
-                var permuted = new bool[8];
-                permuted[0] = toPermute[5];
-                permuted[1] = toPermute[2];
-                permuted[2] = toPermute[6];
-                permuted[3] = toPermute[3];
-                permuted[4] = toPermute[7];
-                permuted[5] = toPermute[4];
-                permuted[6] = toPermute[9];
-                permuted[7] = toPermute[8];
-                return permuted;
+                var permutation = new int[] { 6, 3, 7, 4, 8, 5, 10, 9 };
+                return Permute(toPermute, permutation);
             }
 
             internal static bool[] Ep(bool[] toPermute)
             {
-                var permuted = new bool[8];
-                permuted[0] = toPermute[3];
-                permuted[1] = toPermute[0];
-                permuted[2] = toPermute[1];
-                permuted[3] = toPermute[2];
-                permuted[4] = toPermute[1];
-                permuted[5] = toPermute[2];
-                permuted[6] = toPermute[3];
-                permuted[7] = toPermute[0];
-                return permuted;
+                var permutation = new int[] { 4, 1, 2, 3, 2, 3, 4, 1 };
+                return Permute(toPermute, permutation);
             }
 
             internal static bool[] Ip(bool[] toPermute)
             {
-                var permuted = new bool[8];
-                permuted[0] = toPermute[1];
-                permuted[1] = toPermute[5];
-                permuted[2] = toPermute[2];
-                permuted[3] = toPermute[0];
-                permuted[4] = toPermute[3];
-                permuted[5] = toPermute[7];
-                permuted[6] = toPermute[4];
-                permuted[7] = toPermute[6];
-                return permuted;
+                var permutation = new int[] { 2, 6, 3, 1, 4, 8, 5, 7 };
+                return Permute(toPermute, permutation);
             }
 
             internal static bool[] Rip(bool[] toPermute)
             {
-                var permuted = new bool[8];
-                permuted[0] = toPermute[3];
-                permuted[1] = toPermute[0];
-                permuted[2] = toPermute[2];
-                permuted[3] = toPermute[4];
-                permuted[4] = toPermute[6];
-                permuted[5] = toPermute[1];
-                permuted[6] = toPermute[7];
-                permuted[7] = toPermute[5];
-                return permuted;
+                var permutation = new int[] { 4, 1, 3, 5, 7, 2, 8, 6 };
+                return Permute(toPermute, permutation);
             }
 
             internal static bool[] P4(bool[] toPermute)
             {
-                var permuted = new bool[toPermute.Length];
-                permuted[0] = toPermute[1];
-                permuted[0] = toPermute[3];
-                permuted[0] = toPermute[2];
-                permuted[0] = toPermute[0];
-                return permuted;
+                var permutation = new int[] { 2, 4, 3, 1 };
+                return Permute(toPermute, permutation);
             }
         }
     }
