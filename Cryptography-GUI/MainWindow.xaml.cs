@@ -18,11 +18,6 @@ namespace Cryptography_GUI
             var sdes = new Cryptography.SDes("0101010101");
         }
 
-        private void richTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
         private bool[] ParseKey(string stringKey)
         {
             var key = new List<bool>();
@@ -52,7 +47,7 @@ namespace Cryptography_GUI
             var key = new bool[10];
             for (int i = 0; i < 32; i++)
             {
-                var chars = GetIntBinaryString(i).ToCharArray();
+                var chars = Cryptography.Tools.GetIntBinaryString(i).ToCharArray();
                 chars = chars.Skip(chars.Length - 5).ToArray();
                 var genKey = this.ParseKey(string.Concat(chars));
                 Console.WriteLine(string.Concat(chars) + "\n");
@@ -76,28 +71,6 @@ namespace Cryptography_GUI
                 this.Decrypt(encrypted, this.ParseKey(key));
             else
                 this.DecryptBruteforce(encrypted, this.ParseKey(key));
-        }
-
-        static string GetIntBinaryString(int n)
-        {
-            char[] b = new char[32];
-            int pos = 31;
-            int i = 0;
-
-            while (i < 32)
-            {
-                if ((n & (1 << i)) != 0)
-                {
-                    b[pos] = '1';
-                }
-                else
-                {
-                    b[pos] = '0';
-                }
-                pos--;
-                i++;
-            }
-            return new string(b);
         }
     }
 }
