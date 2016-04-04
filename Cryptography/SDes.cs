@@ -18,17 +18,17 @@ namespace Cryptography
             this._masterKey = masterKey.Take(10).ToArray();
             this._sandbox1 = new Sandbox(new bool[,][]
             {
-                { new [] { false, true }, new [] { false, false }, new [] { true, true }, new [] { true, false } },
-                { new [] { true, true }, new [] { true, false }, new [] { false, true }, new [] { false, false } },
-                { new [] { false, false }, new [] { true, false }, new [] { false, true }, new [] { true, true } },
-                { new [] { true, true }, new [] { false, true }, new [] { true, true }, new [] { true, false } }
+                { new [] { false, false }, new [] { true, true }, new [] { false, false }, new [] { false, false } },
+                { new [] { false, false }, new [] { false, false }, new [] { false, false }, new [] { true, true } },
+                { new [] { true, true }, new [] { false, false }, new [] { false, false }, new [] { false, false } },
+                { new [] { false, false }, new [] { false, false }, new [] { false, false }, new [] { false, false } }
             });
             this._sandbox2 = new Sandbox(new bool[,][]
             {
-                { new [] { false, false }, new [] { false, true }, new [] { true, false }, new [] { true, true } },
-                { new [] { true, false }, new [] { false, false }, new [] { false, true }, new [] { true, true } },
-                { new [] { true, true }, new [] { false, false }, new [] { false, true }, new [] { false, false } },
-                { new [] { true, false }, new [] { false, true }, new [] { false, false }, new [] { true, true } }
+                { new [] { true, true }, new [] { false, false }, new [] { false, false }, new [] { false, false } },
+                { new [] { false, false }, new [] { true, true }, new [] { false, false }, new [] { false, false } },
+                { new [] { false, false }, new [] { true, true }, new [] { false, false }, new [] { true, true } },
+                { new [] { false, false }, new [] { false, false }, new [] { true, true }, new [] { false, false } }
             });
         }
 
