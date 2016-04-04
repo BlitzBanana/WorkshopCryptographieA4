@@ -39,17 +39,18 @@ namespace Cryptography_GUI
             var decrypted = sDes.Decrypt(text);
             if (clear) this.richTextBoxClear.Document.Blocks.Clear();
             this.richTextBoxClear.AppendText(decrypted + "\n");
+            Console.WriteLine("Decrypted: " + decrypted);
         }
 
         private void DecryptBruteforce(string text, bool[] partialKey)
         {
+            Console.WriteLine("Decryption with bruteforce:");
             var key = new bool[10];
             for (int i = 0; i < 32; i++)
             {
                 var chars = Cryptography.Tools.GetIntBinaryString(i).ToCharArray();
                 chars = chars.Skip(chars.Length - 5).ToArray();
                 var genKey = this.ParseKey(string.Concat(chars));
-                Console.WriteLine(string.Concat(chars) + "\n");
                 var fullKey = Cryptography.Tools.MergeArrays<bool>(partialKey, genKey);
                 this.Decrypt(text, fullKey, false);
             }

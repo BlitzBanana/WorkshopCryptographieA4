@@ -5,11 +5,11 @@ VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cryptography", "Cryptography\Cryptography.csproj", "{6603DA1C-CE48-4BC3-AB83-297135A64C61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cryptography.GUI", "Cryptography-GUI\Cryptography.GUI.csproj", "{112390A5-FD6E-4F4C-87F9-2B63D693BFDA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cryptography.GUI", "Cryptography.GUI\Cryptography.GUI.csproj", "{112390A5-FD6E-4F4C-87F9-2B63D693BFDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cryptography.Tests", "Cryptography-Tests\Cryptography.Tests.csproj", "{6785B278-AB69-41C5-BA83-6092A60D7B3E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cryptography.Tests", "Cryptography.Tests\Cryptography.Tests.csproj", "{6785B278-AB69-41C5-BA83-6092A60D7B3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cryptography.CLI", "Cryptography-CLI\Cryptography.CLI.csproj", "{CC4F2790-5282-4239-BB9C-E8B2103E049E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cryptography.CLI", "Cryptography.CLI\Cryptography.CLI.csproj", "{CC4F2790-5282-4239-BB9C-E8B2103E049E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toolbox.CLI", "Toolbox.CLI\Toolbox.CLI.csproj", "{B8374C23-9F26-44AF-A1EB-8BE57FA76554}"
 EndProject
