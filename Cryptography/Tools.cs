@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Cryptography
 {
@@ -63,6 +64,14 @@ namespace Cryptography
                 i++;
             }
             return new string(b);
+        }
+        
+        public static bool[] ParseKey(string stringKey)
+        {
+            var key = new List<bool>();
+            foreach (var c in stringKey)
+                key.Add(c == '0' ? false : true);
+            return key.ToArray();
         }
     }
 }

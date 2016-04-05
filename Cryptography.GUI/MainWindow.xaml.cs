@@ -11,48 +11,38 @@ namespace Cryptography_GUI
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Cryptography.SDes _sDes;
+        private Cryptography.BruteForce _bruteForce;
+
         public MainWindow()
         {
             InitializeComponent();
-            var sdes = new Cryptography.SDes("0101010101");
+            this._bruteForce = new Cryptography.BruteForce();
+            this._sDes = new Cryptography.SDes();
         }
 
-        private bool[] ParseKey(string stringKey)
+        private void Encrypt(string text, string key, bool clear = true)
         {
-            var key = new List<bool>();
-            foreach (var c in stringKey)
-                key.Add(c == '0' ? false : true);
-            return key.ToArray();
-        }
-
-        private void Encrypt(string text, bool[] key, bool clear = true)
-        {
-            var sDes = new Cryptography.SDes(key.ToArray());
-            var encrypted = sDes.Encrypt(text);
+            var encrypted = this._sDes.Encrypt(text, key);
             if (clear) this.richTextBoxEncrypted.Document.Blocks.Clear();
             this.richTextBoxEncrypted.AppendText(encrypted);
         }
 
-        private void Decrypt(string text, bool[] key, bool clear = true)
+        private void Decrypt(string text, string key, bool clear = true)
         {
-            var sDes = new Cryptography.SDes(key.ToArray());
-            var decrypted = sDes.Decrypt(text);
+            var decrypted = this._sDes.Decrypt(text, key);
             if (clear) this.richTextBoxClear.Document.Blocks.Clear();
             this.richTextBoxClear.AppendText(decrypted + "\n");
             Console.WriteLine("Decrypted: " + decrypted);
         }
 
-        private void DecryptBruteforce(string text, bool[] partialKey)
+        private void DecryptBruteforce(string text, string partialKey)
         {
             Console.WriteLine("Decryption with bruteforce:");
-            var key = new bool[10];
-            for (int i = 0; i < 32; i++)
+
+            foreach (var result in this._bruteForce.Exec(partialKey, 10))
             {
-                var chars = Cryptography.Tools.GetIntBinaryString(i).ToCharArray();
-                chars = chars.Skip(chars.Length - 5).ToArray();
-                var genKey = this.ParseKey(string.Concat(chars));
-                var fullKey = Cryptography.Tools.MergeArrays<bool>(partialKey, genKey);
-                this.Decrypt(text, fullKey, false);
+                this.Decrypt(text, result, false);
             }
         }
 
@@ -60,7 +50,7 @@ namespace Cryptography_GUI
         {
             var clear = new TextRange(this.richTextBoxClear.Document.ContentStart, this.richTextBoxClear.Document.ContentEnd).Text;
             var key = this.textBoxKey.Text;
-            this.Encrypt(clear, this.ParseKey(key));
+            this.Encrypt(clear, key);
         }
 
         private void buttonDecrypt_Click(object sender, RoutedEventArgs e)
@@ -68,9 +58,9 @@ namespace Cryptography_GUI
             var encrypted = new TextRange(this.richTextBoxEncrypted.Document.ContentStart, this.richTextBoxEncrypted.Document.ContentEnd).Text;
             var key = this.textBoxKey.Text;
             if (key.Length > 9)
-                this.Decrypt(encrypted, this.ParseKey(key));
+                this.Decrypt(encrypted, key);
             else
-                this.DecryptBruteforce(encrypted, this.ParseKey(key));
+                this.DecryptBruteforce(encrypted, key);
         }
     }
 }

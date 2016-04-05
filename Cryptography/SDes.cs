@@ -9,13 +9,8 @@ namespace Cryptography
         private Sandbox _sandbox1;
         private Sandbox _sandbox2;
 
-        public SDes(string masterKey)
-            :this(masterKey.Take(10).Select(x => x == '0' ? false : true).ToArray())
-        { }
-
-        public SDes(bool[] masterKey)
+        public SDes()
         {
-            this._masterKey = masterKey.Take(10).ToArray();
             this._sandbox1 = new Sandbox(new bool[,][]
             {
                 { new [] { false, false }, new [] { true, true }, new [] { false, false }, new [] { false, false } },
@@ -32,16 +27,18 @@ namespace Cryptography
             });
         }
 
-        public string Encrypt(string sentence)
+        public string Encrypt(string sentence, string masterKey)
         {
+            this._masterKey = masterKey.Take(10).Select(x => x == '0' ? false : true).ToArray();
             var result = new List<char>();
             foreach (char c in sentence)
                 result.Add(this.EncryptChar(c));
             return string.Concat(result);
         }
 
-        public string Decrypt(string sentence)
+        public string Decrypt(string sentence, string masterKey)
         {
+            this._masterKey = masterKey.Take(10).Select(x => x == '0' ? false : true).ToArray();
             var result = new List<char>();
             foreach (var c in sentence)
                 result.Add(this.DecryptChar(c));
