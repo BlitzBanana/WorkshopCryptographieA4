@@ -41,8 +41,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Command.cs" />
+    <Compile Include="CommandArgument.cs" />
+    <Compile Include="CommandCollection.cs" />
     <Compile Include="CommandItem.cs" />
     <Compile Include="CommandManager.cs" />
+    <Compile Include="InputHistory.cs" />
     <Compile Include="ISession.cs" />
     <Compile Include="Mode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
