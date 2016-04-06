@@ -10,9 +10,9 @@ namespace Cryptography_Tests
         {
             var clear = "Hello World !";
             var key = "0101010101";
-            var sdes = new Cryptography.SDes(key);
-            var encrypted = sdes.Encrypt(clear);
-            var decrypted = sdes.Decrypt(encrypted);
+            var sdes = new Cryptography.SDes();
+            var encrypted = sdes.Encrypt(clear, key);
+            var decrypted = sdes.Decrypt(encrypted, key);
             Assert.AreNotEqual(clear, encrypted);
             Assert.AreNotEqual(encrypted, decrypted);
             Assert.AreEqual(clear, decrypted);
